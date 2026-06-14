@@ -1,12 +1,15 @@
 # Interaction & Elicitation — for skills that talk to the user
 
-When the skill you're authoring **interviews or decides things with a human** (discovery,
-architecture, planning, setup wizards), give it this interaction style. It makes the skill feel
-like a sharp thinking partner — and, crucially, lets it **recommend a default and adapt to a
-less-experienced user** instead of dumping choices on them.
+> **Autonomy is the default; interaction is the exception.** A well-built skill acts on its own
+> and only stops to involve the human for a decision genuinely theirs to make, or a real branch
+> it can't resolve from context + sensible defaults. Reach for this reference **only** for those
+> moments — a deliberately interactive skill (discovery, architecture, a setup wizard), or a
+> specific `if`/decision point inside an otherwise autonomous skill. A formatter or one-shot
+> generator should just run; don't bolt an interview onto it.
 
-Add an "Interaction" note to the generated skill's body (or a short reference) drawn from the
-rules below. Skip this for non-interactive skills (a formatter, a one-shot generator).
+When the skill **does** need to elicit a choice from a human, give that moment this style: a
+sharp thinking partner that **recommends a default and adapts to a less-experienced user**
+instead of dumping choices on them.
 
 ## Be a thinking partner, not a form
 

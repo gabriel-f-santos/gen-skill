@@ -36,7 +36,7 @@ This `SKILL.md` is a **router**. Load only the reference you need for the curren
 | look up every frontmatter field and which platform honors it | `references/frontmatter.md` |
 | decide what goes in `SKILL.md` vs `references/`/`scripts/`/`assets/` | `references/progressive-disclosure.md` |
 | pick an execution shape and decide single vs multiple skills | `references/archetypes-and-splitting.md` |
-| make an **interactive** skill talk well — thinking-partner style, recommended defaults, calibrate to the user's experience | `references/interaction-and-elicitation.md` |
+| (only if the skill must involve the user) elicit well — recommended defaults, calibrate to experience; otherwise default to autonomy | `references/interaction-and-elicitation.md` |
 | **find & ground the content** — local code, context7, web, subagent fan-out, then synthesize | `references/research-grounding.md` |
 | set least-privilege tools and avoid injection/exfil risks | `references/security.md` |
 | **improve/fix an existing skill** from outcomes & examples | `references/iteration.md` |
@@ -86,11 +86,13 @@ fits. Cover these decision axes (full rationale in the linked references):
 Record the chosen answers as a short spec before writing anything. If the user says "just
 vibe with me / skip the interview", collapse to questions 1, 3, and 5 only.
 
-**If the skill you're building is itself interactive** (it interviews or decides things with a
-human), give it the thinking-partner interaction style — recommended defaults marked
-"(Recomendado)", calibrated to the user's experience, educating the less-experienced rather than
-making them choose blind. → `references/interaction-and-elicitation.md`. Apply the same style to
-*this* interview.
+**Prefer autonomy.** A generated skill should act on its own and involve the user only for a
+decision genuinely theirs to make, or a real branch the agent can't resolve from context and
+sensible defaults. Most skills should lean autonomous. **Only when** the skill must elicit a
+choice (or the user is explicitly driving the decision) give it the thinking-partner style — a
+recommended default marked "(Recomendado)" with a one-line why, calibrated to the user's
+experience. → `references/interaction-and-elicitation.md`. (E.g. `tech-discovery` is
+intentionally interactive; a formatter or one-shot generator should just run.)
 
 ### Step 1b — Research & ground the content (skip for trivial wrappers)
 
