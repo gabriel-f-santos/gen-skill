@@ -1,15 +1,16 @@
 ---
 name: skill-gen
 description: >
-  Generate production-grade Agent Skills through a guided interview. Use whenever the user
-  wants to create, scaffold, author, or design a new skill or set of skills — phrases like
-  "create a skill", "make a skill", "gera uma skill", "skill para X", "turn this workflow
-  into a skill", "skill generator". Interviews the user to decide target runtimes (Claude
-  Code, OpenAI Codex, opencode), single vs multiple skills, execution shape, tool/permission
-  needs, and progressive-disclosure layout. Produces a portable SKILL.md plus
-  references/scripts/assets and per-platform sidecars (Claude allowed-tools, Codex
-  openai.yaml), then validates the result. Do not use to merely tweak prose in one existing
-  file — use for authoring or scaffolding skills.
+  Generate AND iteratively improve production-grade Agent Skills through a guided interview.
+  Use whenever the user wants to create, scaffold, author, or design a new skill or set of
+  skills — "create a skill", "gera uma skill", "skill para X", "turn this workflow into a
+  skill" — OR to improve/fix an existing one ("this skill mis-fired", "it didn't trigger",
+  "improve this skill", "optimize the trigger"). Interviews to decide target runtimes (Claude
+  Code, Codex, opencode), single vs multiple skills, execution shape, and tools, then writes a
+  portable SKILL.md plus references/scripts and per-platform sidecars (Codex openai.yaml),
+  tunes the description, and validates. Do not use to run, install, or security-review an
+  existing skill (that's skill-scanner), or to tweak non-skill prose — only to author or
+  improve a skill.
 allowed-tools: Read Write Edit Bash(python3 *) Bash(ls *) Bash(cat *) Bash(mkdir *)
 ---
 
@@ -36,17 +37,26 @@ This `SKILL.md` is a **router**. Load only the reference you need for the curren
 | decide what goes in `SKILL.md` vs `references/`/`scripts/`/`assets/` | `references/progressive-disclosure.md` |
 | pick an execution shape and decide single vs multiple skills | `references/archetypes-and-splitting.md` |
 | set least-privilege tools and avoid injection/exfil risks | `references/security.md` |
+| **improve/fix an existing skill** from outcomes & examples | `references/iteration.md` |
+| **tune the trigger** — reduce false positives/negatives in the description | `references/description-optimization.md` |
 | copy a starting skeleton | `assets/templates/` |
 
 ---
 
 ## Workflow (follow in order)
 
-### Step 0 — Capture intent from context first
+### Step 0 — Capture intent: create or improve?
 
-If the current conversation already contains the workflow to capture ("turn this into a
-skill"), extract answers from history before asking: the steps taken, tools used,
-corrections the user made, input/output formats observed. Only ask what you cannot infer.
+First decide the operation:
+- **Create** (new skill) → continue with Steps 1–6 below.
+- **Improve** (an existing skill mis-fired, didn't trigger, or produced weak output) → switch
+  to the iteration loop in `references/iteration.md`: capture the examples, split working vs
+  holdout, make the smallest delta, replay, and confirm no regression. Then run Step 5
+  (validate) + the description tuning in Step 4b before reporting. Skip the create-only steps.
+
+If the conversation already contains the workflow to capture ("turn this into a skill"),
+extract answers from history before asking: the steps taken, tools used, corrections the user
+made, input/output formats observed. Only ask what you cannot infer.
 
 ### Step 1 — Interview
 
@@ -113,6 +123,14 @@ Start from `assets/templates/SKILL.md.tpl`. Rules:
   restriction, emit a short `PORTABILITY.md` telling them the exact `opencode.json` snippet.
 - When more than one runtime is targeted, always emit `PORTABILITY.md` listing what to
   configure where (template in `assets/templates/`). → `references/portability.md`
+
+### Step 4b — Optimize the trigger description
+
+The `description` is what decides whether the skill fires. Tune it before validating →
+`references/description-optimization.md`: draft realistic trigger phrasing, build
+should-trigger / should-not-trigger query sets (the near-misses matter most), check the
+description against both, and edit until false positives/negatives are acceptable. Keep it
+generic across runtimes unless the skill is intentionally provider-specific.
 
 ### Step 5 — Validate
 
