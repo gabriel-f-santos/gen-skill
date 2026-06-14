@@ -11,7 +11,7 @@ description: >
   tunes the description, and validates. Do not use to run, install, or security-review an
   existing skill (that's skill-scanner), or to tweak non-skill prose — only to author or
   improve a skill.
-allowed-tools: Read Write Edit Bash(python3 *) Bash(ls *) Bash(cat *) Bash(mkdir *)
+allowed-tools: Read Write Edit Grep Glob WebSearch WebFetch Task Bash(python3 *) Bash(ls *) Bash(cat *) Bash(mkdir *)
 ---
 
 # skill-gen — the skill that generates skills
@@ -36,6 +36,7 @@ This `SKILL.md` is a **router**. Load only the reference you need for the curren
 | look up every frontmatter field and which platform honors it | `references/frontmatter.md` |
 | decide what goes in `SKILL.md` vs `references/`/`scripts/`/`assets/` | `references/progressive-disclosure.md` |
 | pick an execution shape and decide single vs multiple skills | `references/archetypes-and-splitting.md` |
+| **find & ground the content** — local code, context7, web, subagent fan-out, then synthesize | `references/research-grounding.md` |
 | set least-privilege tools and avoid injection/exfil risks | `references/security.md` |
 | **improve/fix an existing skill** from outcomes & examples | `references/iteration.md` |
 | **tune the trigger** — reduce false positives/negatives in the description | `references/description-optimization.md` |
@@ -83,6 +84,26 @@ fits. Cover these decision axes (full rationale in the linked references):
 
 Record the chosen answers as a short spec before writing anything. If the user says "just
 vibe with me / skip the interview", collapse to questions 1, 3, and 5 only.
+
+### Step 1b — Research & ground the content (skip for trivial wrappers)
+
+A skill is only as good as the knowledge curated into it — structure isn't enough. When the
+skill encodes domain knowledge that must be correct and current (a library/framework/API, a
+security/compliance domain, a methodology, anything with per-language/per-platform detail),
+**go find the content** → `references/research-grounding.md`:
+
+- Ground locally first: `Grep`/`Glob` the target repo for real conventions and **gotchas**;
+  **check installed versions** and pin research to them; read sibling skills for house style.
+- Pull current docs from **context7** (version-specific) for any named library/API; prefer
+  primary sources (official docs, RFCs) over blogs; use `WebSearch`/`WebFetch` for recent
+  practice.
+- **Fan out with subagents (`Task`)** — one per language/variant/sub-domain — each returning
+  structured findings; then synthesize into one reference file per domain (the Sentry pattern).
+  Degrade gracefully if subagents/web/context7 aren't available.
+- **Verify** non-obvious claims against a second source; tag confidence; capture provenance.
+
+Skip this step for a thin procedural wrapper with no external knowledge. Output: a short
+research log (findings + sources + gaps) that feeds the authoring step.
 
 ### Step 2 — Decide layout
 
