@@ -97,10 +97,15 @@ security/compliance domain, a methodology, anything with per-language/per-platfo
 - Pull current docs from **context7** (version-specific) for any named library/API; prefer
   primary sources (official docs, RFCs) over blogs; use `WebSearch`/`WebFetch` for recent
   practice.
-- **Fan out with subagents (`Task`)** — one per language/variant/sub-domain — each returning
-  structured findings; then synthesize into one reference file per domain (the Sentry pattern).
-  Degrade gracefully if subagents/web/context7 aren't available.
-- **Verify** non-obvious claims against a second source; tag confidence; capture provenance.
+- Work in **three stages — plan → capture → consolidate** — don't research straight into the
+  final references:
+  1. **Plan** the questions/dimensions and which source each needs.
+  2. **Capture** each result in its **own file** in a scratch workspace **outside the skill**
+     (`<workspace>/<slug>/raw/NN-*.md`), one per dimension — **fan out with subagents (`Task`)**,
+     one per item, each writing its own file with provenance + confidence.
+  3. **Consolidate** the workspace into one reference file per domain (the Sentry pattern),
+     verifying non-obvious claims against a second source first. The raw workspace doesn't ship.
+- Degrade gracefully if subagents/web/context7 aren't available (run inline; flag confidence).
 
 Skip this step for a thin procedural wrapper with no external knowledge. Output: a short
 research log (findings + sources + gaps) that feeds the authoring step.
